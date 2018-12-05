@@ -12,7 +12,7 @@ fi
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -118,9 +118,12 @@ alias dotconfig="git --git-dir=$HOME/.dotconfig/ --work-tree=$HOME"
 alias dotconfig-init="git init --bare $HOME/.dotconfig && dotconfig config status.showUntrackedFiles no"
 
 #Exports
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-. ./.secrets
+[[ -v NVM_DIR ]] || export NVM_DIR="$HOME/.nvm"
+([ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh") || ([ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh") # This loads nvm
+([ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion") || [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm bash_completion
+
+if [ -f ./.secrets ]; then
+  . ./.secrets
+fi
 
 # cd $REPOS_ROOT
